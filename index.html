@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WebAPI - DHT</title>
+    <script src= "./chart.min.js"></script>
+   
+    </head>
+    <body>
+
+        <h1> AP 04</h1>
+        <p> Temperatura: <span id = "lat"></span><br />
+            Humidade: <span id = "lon"></span>
+        </p>
+       
+       
+        <div class="chart-container" style="position: relative; height:40vh; width:60vw">
+            <canvas id="chart"></canvas>
+        </div>
+           
+        <!-- <script src = "./main.js"></script> -->
+        <script src = "./website/sketch.js"></script>
+        <!-- <script src = "./main_json.js"></script> -->
+       
+
+<!--         <script>  
+        
+        
+        ChartIt();
+        //getData();
+        function ChartIt(){
+        (async () => {    
+        const data  = await  getData();
+        const ctx = document.getElementById('chart').getContext('2d'); 
+        
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.xlabel,//['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: 'Global Average Temperature',
+                    data: data.ytemps,
+                    fill : false,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)'],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)' ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+        scales: {
+            y: {
+                ticks: {
+                    // Include a dollar sign in the ticks
+                    callback: function(value, index, ticks) {
+                        return  value + '°C';
+                    }
+                }
+            }
+        }
+    }
+          
+        });
+    })();
+    
+ }
+        
+       
+         async function getData(){
+            const xlabel = []; 
+            const ytemps = [];    
+            const response = await fetch("ZonAnn.Ts+dSST.csv");
+            //const response = await fetch("test.csv");
+            const data = await response.text();
+            //console .log(data);
+            
+            const table = data.split("\n").slice(1);
+            //const rows = data.split("\n").slice(1);
+
+            table.forEach(row => {
+                const columns = row.split(",");
+                const year = columns[0];
+                xlabel.push(year);
+                const temp = columns[1];
+                ytemps.push(parseFloat(temp) + 14);
+                console .log(year, temp);
+                
+            });
+           return {xlabel, ytemps};
+        }
+
+        </script> -->
+       
+
+    </body>
+</html>
