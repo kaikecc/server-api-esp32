@@ -6,8 +6,8 @@ var values = JSON.parse(data);
 
 var obj = {
     DHT: []
-    };
-    
+};
+
 
 
 console.log('server is running');
@@ -41,15 +41,51 @@ app.use(express.static('website'));
 
 //function sendFlower(request, response) {
 //    var data = request.params;
-//    
+//
 //    response.send("You sent me a " + data.flower);
 //}
 
+app.get('/period/:start/:end', getPeriod);
+
+function getPeriod(request, response) {
+
+    var data = fs.readFileSync('temps.json');
+    var values = JSON.parse(data);
+    var start = request.params.start;
+    var end = request.params.end;
+
+    var reply;
+
+    indexStart = values.DHT.findIndex(x => x.date >= start);
+    indexEnd = values.DHT.findIndex(x => x.date === end);
+
+    console.log(indexEnd);
+
+    var founds = [];
+    // indexs = [];
+
+    // for (var i = 0; i < values.DHT.length; i++) {
+    //     if (values.DHT[i].date >= start && values.DHT[i].date <= end) {
+    //         indexs.push(i);
+    //     }
 
 
-app.get('/search/:pos/', searchTemp);
 
-function searchTemp(request, response) {
+    // }
+    // console.log(indexs);
+
+    for (var i = indexStart; i <= indexEnd; i++) {
+        founds.push(values.DHT[i]);
+        console.log(values.DHT[i].date);
+    }
+
+    response.send(founds);
+}
+
+
+app.get('/search/:pos/', searchData);
+
+function searchData(request, response) {
     var data = fs.readFileSync('temps.json');
     var values = JSON.parse(data);
     var pos = request.params.pos;
@@ -64,10 +100,10 @@ function searchTemp(request, response) {
         reply = {
             status: 'not found',
             pos: pos,
-            
+
         }
     }
-response.send(reply);
+    response.send(reply);
 }
 
 app.get('/temp', sendTemp);
@@ -79,10 +115,9 @@ function sendTemp(request, response) {
 }
 
 //localhost:3000/add/temperature/valueTemp/humidity/valueHumidity
-app.get('/add/temperature/:valueTemp/humidity/:valueHumidity', addTemp);
-//app.get('/add/:temp/:score', addTemp);
+app.get('/add/temperature/:valueTemp/humidity/:valueHumidity', addData);
 
-function addTemp(request, response) {
+function addData(request, response) {
     var data = request.params;
     var temp = data.temperature;
     var valueTemp = Number(data.valueTemp);
@@ -94,43 +129,43 @@ function addTemp(request, response) {
     var reply;
 
     if (!valueTemp & !valueHumidity) {
-         reply = {
+        reply = {
             msg: "Score is required"
         }
     }
     else {
-               
-       var now = new Date();
-        
-        
-         obj.DHT.push({ date: now, temperature: valueTemp, humidity: valueHumidity });
-        
-         var data = JSON.stringify(obj, null, 2);
-        
+
+        var now = new Date();
+
+
+        obj.DHT.push({ date: now, temperature: valueTemp, humidity: valueHumidity });
+
+        var data = JSON.stringify(obj, null, 2);
+
         fs.writeFile('temps.json', data, finished);
-       // fs.appendFileSync('temps.json', data, finished);
-        
+        // fs.appendFileSync('temps.json', data, finished);
+
         function finished(err) {
             console.log('file written');
             reply = {
                 temperature: valueTemp,
-                humidity: valueHumidity,                
+                humidity: valueHumidity,
                 status: "sucess"
-            
+
             }
-        } 
-        
+        }
+
         reply = {
             temperature: valueTemp,
-            humidity: valueHumidity,                
+            humidity: valueHumidity,
             status: "sucess"
-        
+
         }
-         
+
     }
 
-   
+
 
     response.send(reply);
-   
+
 }
