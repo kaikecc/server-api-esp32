@@ -33,6 +33,7 @@ h1 {
 .chart-humid {
 
     position: relative;
+    content:  "\0025";
     height: 350px;
     width: 1024px;
     display: flex;

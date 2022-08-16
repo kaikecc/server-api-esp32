@@ -90,7 +90,20 @@ const chart_temperature = new Chart(ctx_temperature, config_temperature);
 const chart_humidity = new Chart(ctx_humidity, config_humidity);
 
 
+async function refreshData() {
 
+    const response = await fetch("http://localhost:3000/temp");
+    
+    const data = await response.text();
+    const obj = JSON.parse(data);
+
+    const count = Object.keys(obj.DHT).length;
+   
+
+    document.getElementById('temp').textContent = obj.DHT[count - 1].temperature;
+    document.getElementById('humid').textContent = obj.DHT[count - 1].humidity;
+
+}
 
 async function getData() {
 
@@ -100,7 +113,7 @@ async function getData() {
     const ytemps = [];
     const yhumidity = [];
     const response = await fetch("http://localhost:3000/temp");
-    //const response = await fetch("test.csv");
+    
     const data = await response.text();
     const obj = JSON.parse(data);
 
@@ -110,9 +123,9 @@ async function getData() {
     document.getElementById('temp').textContent = obj.DHT[count - 1].temperature;
     document.getElementById('humid').textContent = obj.DHT[count - 1].humidity;
 
-    // var date = obj.DHT[parseInt(count)-1].date.replace("T", " ")
+    
     var date = obj.DHT[parseInt(count) - 1].date
-    //console.log(date.slice(0,date.length-5));
+    
 
     let dropdown_initial = document.getElementById('date_initial');
     let dropdown_final = document.getElementById('date_final');
@@ -120,23 +133,18 @@ async function getData() {
     for (var i = 0; i < obj.DHT.length; i++) {
         var option = document.createElement("option");
         var option2 = document.createElement("option");
-        // option.text = obj.DHT[i].date.slice(0, obj.DHT[i].date.length - 5);
-        // option2.text = obj.DHT[i].date.slice(0, obj.DHT[i].date.length - 5);
+        
 
         option.text = obj.DHT[i].date;
         option2.text = obj.DHT[i].date;
 
         dropdown_final.add(option);
         dropdown_initial.add(option2);
-
-        //txt = document.createTextNode(obj.DHT[i].date);
-        //option.appendChild(txt);
-        //select.insertBefore(option, select.lastChild);                
+               
     }
 
     for (var i = 0; i < obj.DHT.length; i++) {
-        // var date = obj.DHT[i].date.replace("T", " ")
-        //  xlabel.push(date.slice(0, date.length - 5));
+       
         var date = obj.DHT[i].date
         xlabel.push(date);
 
@@ -144,7 +152,7 @@ async function getData() {
         ytemps.push(obj.DHT[i].temperature);
         yhumidity.push(obj.DHT[i].humidity);
     }
-
+    //filterDate();
     return { xlabel, ytemps, yhumidity };
 }
 
@@ -167,18 +175,11 @@ function getSelectValue() {
         document.getElementById("filter").disabled = false; 
         return;
     }
-    
-    
-
+  
 }
 
 
-function refresh() {
-    setTimeout(function () {
-        location.reload()
-        // location.href = "http://localhost:3000";
-    }, 30000);
-}
+
 
 async function filterDate() {
 
@@ -233,10 +234,10 @@ async function filterDate() {
 
 
 filterDate();
-//getData();
+getData();
 getSelectValue();
-getSelectValueFinal();
-//setInterval(getData, 1000);
 
+setInterval(refreshData, 1000);
 
+setInterval(getData, 60000);
 //refresh();
