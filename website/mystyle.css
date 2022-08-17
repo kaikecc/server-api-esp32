@@ -1,0 +1,68 @@
+/* Style of background screen*/
+body {
+    background-color: #f2f2f2;
+}
+
+/* Style of title */
+h1 {
+    color: #000000;
+    font-family: "Arial";
+    font-size: 250%;
+    text-align: center;
+}
+
+
+/* Style of chart Temperature */
+.chart-temp {
+    position: relative;
+    height: 350px;
+    width: 1024px;
+    display: flex;
+    top: 0px;
+    align-items: baseline;
+
+    @media screen and (max-width: 600px) {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+}
+
+/* Style of chart Humidity */
+.chart-humid {
+
+    position: relative;
+    content:  "\0025";
+    height: 350px;
+    width: 1024px;
+    display: flex;
+    top: 100px;
+    align-items: baseline;
+
+    @media screen and (max-width: 600px) {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+}
+
+/* Style of dropdown list of dates Initial and Final */
+.drop-down-list-dates {
+    position: static;
+    color: #000000;
+    font-family: "Arial";
+    text-align: right;
+
+
+}
+
+/* Style of view last values of temperature and humidity */
+.Input-Sensor {
+    position: static;
+    color: #000000;
+    font-family: "Arial";
+    font-size: 150%;
+    text-align: center;
+}

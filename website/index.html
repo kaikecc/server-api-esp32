@@ -1,62 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <style>
-        h1 {
-            color: #ff0000;
-            font-family: "Arial";
-            font-size: 250%;
-            text-align: center;
-        }
-    </style>
+
+<head>
+
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WebAPI - DHT</title>
-    <script src= "./chart.min.js"></script>
+    <script src="./chart.min.js"></script>
+    <link rel="stylesheet" href="mystyle.css">
 
-    
-   
-    </head>
-    
-    <body>     
-    
+</head>
 
-        
-        
-        <h1> Temperature and Humidity Monitoring           
-        </h1>
-    
+<body>
 
-    
-        <p> Temperature: <span id = "temp"></span><br />
-            Humidity: <span id = "humid"></span>
+    <h1>
+        Temperature and Humidity Monitoring
+    </h1>
+
+    <div class="Input-Sensor">
+        <p>
+            Temperature: <span id="temp"></span>
+            °C
+            <br />
+            Humidity: <span id="humid">  </span>
+            %
         </p>
-      
-   
-       
-        <div class="chart-container" style="position: relative; height: 350px; width: 1024px; display: flex; top: 0px; align-items:baseline;
-         @media screen and (max-width: 600px) {
-            flex-direction: column; align-items: center; padding: 20px;}
-        ">            
-            <canvas id="chart"></canvas>
+    </div>
+
+    <form>
+        <div class="drop-down-list-dates">
+            <b> Initial Date: </b>
+            <select id="date_initial" onchange="getSelectValue()">
+                <option value="2022-08-16T19:54:07.940Z">2022-08-16T19:54:07.940Z</option>
+            </select>
+            <br />
+            <br />
+            <b> Final Date: </b>
+            <select id="date_final" onchange="getSelectValue()">
+                <option value="2022-08-17T00:39:26.766Z">2022-08-17T00:39:26.766Z</option>
+            </select>
+            <br />
+            <br />
+            <input id = "filter" type="button" value="Filter" onclick="filterDate()">
         </div>
-
-        <div class="chart-container" style="position: relative; height:350px; width:1024px; display: flex; top: 100px; align-items: baseline;
-        @media screen and (max-width: 600px) {
-            flex-direction: column; align-items: center; padding: 20px;}">            
-            <canvas id="chartHumidity"></canvas>
-        </div>
-           
-        <!-- <script src = "./main.js"></script> -->
-        <script src = "./sketch.js"></script>
-        <!-- <script src = "./main_json.js"></script> -->
-       
+    </form>
 
 
-      
+    <div class="chart-temp">
+        <canvas id="chartTemperature"></canvas>
+    </div>
 
-    </body>
+    <div class="chart-humid">
+        <canvas id="chartHumidity"></canvas>
+    </div>
+
+
+    <script src="./sketch.js"></script>
+
+</body>
 
 </html>
