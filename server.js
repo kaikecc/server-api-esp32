@@ -18,12 +18,12 @@ const { finished } = require('stream');
 
 var app = express();
 
-var server = app.listen(3000, listening);
+ var server = app.listen(3000, "192.168.15.13" /*listening*/);
 
 
-function listening() {
-    console.log('listening on port 3000');
-}
+// function listening() {
+//     console.log('listening on port 3000');
+// }
 
 
 

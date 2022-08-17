@@ -237,7 +237,7 @@ filterDate();
 getData();
 getSelectValue();
 
-setInterval(refreshData, 1000);
+setInterval(refreshData, 60000);
 
 setInterval(getData, 60000);
 //refresh();
