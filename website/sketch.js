@@ -1,4 +1,5 @@
 
+
 const ctx_temperature = document.getElementById('chartTemperature').getContext('2d');
 const ctx_humidity = document.getElementById('chartHumidity').getContext('2d');
 
@@ -36,7 +37,7 @@ const config_temperature = {
     data: data_temperature,
     options: {
         maintainAspectRatio: false,
-        
+
 
         scales: {
             x: {
@@ -47,7 +48,7 @@ const config_temperature = {
             y: {
                 beginAtZero: true,
                 min: 0,
-               max: 30,
+                max: 30,
                 ticks: {
                     // Include a dollar sign in the ticks
                     callback: function (value, index, ticks) {
@@ -92,13 +93,16 @@ const chart_humidity = new Chart(ctx_humidity, config_humidity);
 
 async function refreshData() {
 
-    const response = await fetch("http://localhost:3000/temp");
-    
+    const response = await fetch("http://192.168.15.13:3000/temp");
+
     const data = await response.text();
+
+
+
     const obj = JSON.parse(data);
 
     const count = Object.keys(obj.DHT).length;
-   
+
 
     document.getElementById('temp').textContent = obj.DHT[count - 1].temperature;
     document.getElementById('humid').textContent = obj.DHT[count - 1].humidity;
@@ -112,9 +116,11 @@ async function getData() {
     const xlabel = [];
     const ytemps = [];
     const yhumidity = [];
-    const response = await fetch("http://localhost:3000/temp");
-    
+    const response = await fetch("http://192.168.15.13:3000/temp");
+
     const data = await response.text();
+
+
     const obj = JSON.parse(data);
 
     const count = Object.keys(obj.DHT).length;
@@ -123,9 +129,9 @@ async function getData() {
     document.getElementById('temp').textContent = obj.DHT[count - 1].temperature;
     document.getElementById('humid').textContent = obj.DHT[count - 1].humidity;
 
-    
+
     var date = obj.DHT[parseInt(count) - 1].date
-    
+
 
     let dropdown_initial = document.getElementById('date_initial');
     let dropdown_final = document.getElementById('date_final');
@@ -133,18 +139,18 @@ async function getData() {
     for (var i = 0; i < obj.DHT.length; i++) {
         var option = document.createElement("option");
         var option2 = document.createElement("option");
-        
+
 
         option.text = obj.DHT[i].date;
         option2.text = obj.DHT[i].date;
 
         dropdown_final.add(option);
         dropdown_initial.add(option2);
-               
+
     }
 
     for (var i = 0; i < obj.DHT.length; i++) {
-       
+
         var date = obj.DHT[i].date
         xlabel.push(date);
 
@@ -157,7 +163,7 @@ async function getData() {
 }
 
 
-function getSelectValue() {
+async function getSelectValue() {
     var select_initial = document.getElementById("date_initial")
     var value_initial = select_initial.options[select_initial.selectedIndex].value;
 
@@ -167,19 +173,16 @@ function getSelectValue() {
     const start = new Date(value_initial);
     const end = new Date(value_final);
 
-    if (start > end || start == end ||   end < start) {
+    if (start > end || start == end || end < start) {
         document.getElementById("filter").disabled = true;
         return;
     }
     else {
-        document.getElementById("filter").disabled = false; 
+        document.getElementById("filter").disabled = false;
         return;
     }
-  
+
 }
-
-
-
 
 async function filterDate() {
 
@@ -193,12 +196,13 @@ async function filterDate() {
     const start = document.getElementById('date_initial').value;
     const end = document.getElementById('date_final').value;
 
-    
 
 
-    const response_period = await fetch("http://localhost:3000/period/" + start + "/" + end);
+
+    const response_period = await fetch("http://192.168.15.13:3000/period/" + start + "/" + end);
 
     const data = await response_period.text();
+
     const obj = JSON.parse(data);
     console.log(obj.length);
 
@@ -213,22 +217,22 @@ async function filterDate() {
     }
 
 
-    
+
     chart_temperature.config.data.labels = xlabel;
     chart_temperature.config.data.datasets.forEach((dataset) => {
         dataset.data = ytemps;
     });
-    
+
     chart_temperature.update();
 
     chart_humidity.config.data.labels = xlabel;
     chart_humidity.config.data.datasets.forEach((dataset) => {
         dataset.data = yhumidity;
     });
-    
+
     chart_humidity.update();
 
-       
+
 
 }
 
@@ -237,7 +241,6 @@ filterDate();
 getData();
 getSelectValue();
 
-setInterval(refreshData, 60000);
+setInterval(refreshData, 300000);
 
-setInterval(getData, 60000);
-//refresh();
+setInterval(getData, 300000);
