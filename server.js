@@ -51,12 +51,12 @@ function getPeriod(request, response) {
     var start = request.params.start;
     var end = request.params.end;
 
-    var reply;
+    console.log(start);
 
     indexStart = values.DHT.findIndex(x => x.date >= start);
     indexEnd = values.DHT.findIndex(x => x.date === end);
 
-    console.log(indexEnd);
+   
 
     var founds = [];
 
@@ -65,39 +65,54 @@ function getPeriod(request, response) {
         founds.push(values.DHT[i]);
        // console.log(values.DHT[i].date);
     }
-
+    console.log("not found " + founds.length);
     response.send(founds);
 }
 
 
-app.get('/search/:pos/', searchData);
+// app.get('/search/:pos/', searchData);
 
-function searchData(request, response) {
-    var data = fs.readFileSync('sensor-data.json');
-    var values = JSON.parse(data);
-    var pos = request.params.pos;
-    var reply;
-    if (values.DHT[pos]) {
-        reply = {
-            status: 'found',
-            temperature: values.DHT[pos].temperature,
-            humidity: values.DHT[pos].humidity
-        }
-    } else {
-        reply = {
-            status: 'not found',
-            pos: pos,
+// function searchData(request, response) {
+//     var data = fs.readFileSync('sensor-data.json');
+//     var values = JSON.parse(data);
+//     var pos = request.params.pos;
+//     var reply;
+//     if (values.DHT[pos]) {
+//         reply = {
+//             status: 'found',
+//             temperature: values.DHT[pos].temperature,
+//             humidity: values.DHT[pos].humidity
+//         }
+//     } else {
+//         reply = {
+//             status: 'not found',
+//             pos: pos,
 
-        }
-    }
-    response.send(reply);
-}
+//         }
+//     }
+//     response.send(reply);
+// }
 
 app.get('/temp', sendTemp);
 
 function sendTemp(request, response) {
     var data = fs.readFileSync('sensor-data.json');
-    var values = JSON.parse(data);
+    // length of data
+    
+
+    // if (data.length > 0) {
+    //     var values = JSON.parse(data);
+    //     var last = values.DHT[values.DHT.length - 1];
+    //     reply = {
+    //         temperature: null,
+    //         humidity: null,
+    //         date: null
+    //     }
+    //     response.send(reply);
+    // }
+    var values = JSON.parse(data);   
+    console.log("dht: " + values.DHT.length);
+   
     response.send(values);
 }
 
@@ -107,30 +122,30 @@ app.get('/add/temperature/:valueTemp/humidity/:valueHumidity', addData);
 // I want to create a schedule to save the data every minute
 
 
-var rule = schedule.scheduleJob('*/1 * * * *', async function () {
-    console.log('running scheduled task');
-    var now = new Date();
+// var rule = schedule.scheduleJob('*/1 * * * *', async function () {
+//     console.log('running scheduled task');
+//     var now = new Date();
 
-    if (now.getMinutes() - lastdate.getMinutes() >= 5 ) {
+//     if (now.getMinutes() - lastdate.getMinutes() >= 5 ) {
 
-        now = now.toLocaleString();
+//         //now = now.toLocaleString();
 
-        obj.DHT.push({ date: now, temperature: 0.0, humidity: 0.0 });
+//         obj.DHT.push({ date: now, temperature: 0.0, humidity: 0.0 });
 
-        var data = JSON.stringify(obj, null, 2);
+//         var data = JSON.stringify(obj, null, 2);
 
-        fs.writeFile('sensor-data.json', data, finished);
-        // fs.appendFileSync('sensor-data.json', data, finished);
+//         fs.writeFile('sensor-data.json', data, finished);
+//         // fs.appendFileSync('sensor-data.json', data, finished);
 
-        function finished(err) {
-            console.log('not receive request from client');
+//         function finished(err) {
+//             console.log('not receive request from client');
             
-        }
-        lastdate = new Date();
+//         }
+//         lastdate = new Date();
         
-    }
+//     }
     
-});
+// });
 
 
     
@@ -152,15 +167,14 @@ function addData(request, response) {
     }
     else {
 
-        var now = new Date().toLocaleString();
+        var now = new Date(); //.toLocaleString();
 
         
         obj.DHT.push({ date: now, temperature: valueTemp, humidity: valueHumidity });
 
         var data = JSON.stringify(obj, null, 2);
 
-        fs.writeFile('sensor-data.json', data, finished);
-        // fs.appendFileSync('sensor-data.json', data, finished);
+        fs.writeFile('sensor-data.json', data, finished);        
 
         function finished(err) {
             console.log('file written');

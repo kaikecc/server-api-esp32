@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WebAPI - DHT</title>
+   
     <script src="./chart.min.js"></script>
     <link rel="stylesheet" href="mystyle.css">
 
@@ -34,13 +35,14 @@
         <div class="drop-down-list-dates">
             <b> Initial Date: </b>
             <select id="date_initial" onchange="getSelectValue()">
-                <option value="2022-08-16T19:54:07.940Z">2022-08-16T19:54:07.940Z</option>
+                <!-- <option value="2022-08-16T19:54:07.940Z">2022-08-16T19:54:07.940Z</option> -->
+                <option value=""></option>
             </select>
             <br />
             <br />
             <b> Final Date: </b>
             <select id="date_final" onchange="getSelectValue()">
-                <option value="2022-08-17T00:39:26.766Z">2022-08-17T00:39:26.766Z</option>
+                <option value=""></option>
             </select>
             <br />
             <br />
@@ -57,8 +59,10 @@
         <canvas id="chartHumidity"></canvas>
     </div>
 
-
-    <script src="./sketch.js"></script>
+    <!-- to define module require config.js -->
+    
+    
+    <script  src="./sketch.js"></script>
 
 </body>
 
