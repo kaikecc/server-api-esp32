@@ -1,5 +1,44 @@
 {
   "DHT": [
-   
+    {
+      "date": "2022-08-20T21:39:00.000Z",
+      "temperature": 21.4,
+      "humidity": 48
+    },
+    {
+      "date": "2022-08-20T21:39:00.001Z",
+      "temperature": 0,
+      "humidity": 0
+    },
+    {
+      "date": "2022-08-20T21:39:00.002Z",
+      "temperature": 20.2,
+      "humidity": 49
+    },
+    {
+      "date": "2022-08-20T21:39:00.003Z",
+      "temperature": 0,
+      "humidity": 0
+    },
+    {
+      "date": "2022-08-20T21:39:00.004Z",
+      "temperature": 0,
+      "humidity": 0
+    },
+    {
+      "date": "2022-08-20T21:39:00.005Z",
+      "temperature": 0,
+      "humidity": 0
+    },
+    {
+      "date": "2022-08-20T21:39:00.006Z",
+      "temperature": 0,
+      "humidity": 0
+    },
+    {
+      "date": "2022-08-20T21:39:00.007Z",
+      "temperature": 0,
+      "humidity": 0
+    }
   ]
 }

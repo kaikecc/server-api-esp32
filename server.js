@@ -122,7 +122,7 @@ app.get('/add/temperature/:valueTemp/humidity/:valueHumidity', addData);
 // I want to create a schedule to save the data every minute
 
 
-// var rule = schedule.scheduleJob('*/1 * * * *', async function () {
+// var rule = schedule.scheduleJob('/1 * * * * *', async function () {
 //     console.log('running scheduled task');
 //     var now = new Date();
 

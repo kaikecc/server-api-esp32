@@ -1,4 +1,6 @@
 
+// node server.js
+
 const host = "192.168.15.13";
 //const host = "192.168.15.32";
 const port = "3000";
@@ -150,8 +152,8 @@ async function getData() {
             var option2 = document.createElement("option");
 
             var date = obj.DHT[i].date.replace("T", " ")
-            option.text = date.slice(0, date.length - 5)
-            option2.text = date.slice(0, date.length - 5)
+            option.text = obj.DHT[i].date //date.slice(0, date.length - 5)
+            option2.text = obj.DHT[i].date //date.slice(0, date.length - 5)
 
             dropdown_final.add(option);
             dropdown_initial.add(option2);
